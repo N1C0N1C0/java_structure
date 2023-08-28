@@ -1,0 +1,70 @@
+package chap04;
+
+import java.util.Scanner;
+
+public class IntQueueTester {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        IntQueue s = new IntQueue(6);
+
+        while(true) {
+            System.out.println();
+            System.out.printf("現在のデータ数：　%d / %d\n", s.size(), s.getCapacity());
+            System.out.print("(1)インキュー　(2)ディキュー　(3)ピーク　(4)ダンプ　(5)検索　(0)終了：　");
+
+            int menu = sc.nextInt();
+            System.out.println();
+            if(menu == 0) break;
+
+            int x;
+            switch (menu) {
+                case 1 :
+                    System.out.print("データ：　");
+                    x = sc.nextInt();
+                    try {
+                        s.enqueue(x);
+                    }catch (IntQueue.OverflowIntQueueException e) {
+                        System.out.println("キューがいっぱいです。");
+                    }
+                    break;
+
+                case 2 :
+                    try {
+                        x = s.dequeue();
+                        System.out.println("ディキューしたデータは"+x+"です。");
+                    }catch (IntQueue.EmptyIntQueueException e) {
+                        System.out.println("データが空です。");
+                    }
+                    break;
+
+                case 3 :
+                    try {
+                        x = s.peek();
+                        System.out.println("ピークしたデータは"+ x +"です。");
+                    }catch (IntQueue.EmptyIntQueueException e) {
+                        System.out.println("データが空です。");
+                    }
+                    break;
+
+                case 4 :
+                    s.dump();
+                    break;
+
+                case 5 :
+                    System.out.print("探す値を入力してください：　");
+                    int se = sc.nextInt();
+                    int result = s.indexOf(se);
+                    if(result == -1)
+                        System.out.println("その値はありません。");
+                    else
+                        System.out.println("その値は "+ result +" 番目にあります。");
+                    break;
+
+
+                default :
+                    System.out.println("1~4番だけ選択しなさい。");
+
+            }
+        }
+    }
+}
